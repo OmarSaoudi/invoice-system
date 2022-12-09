@@ -1,55 +1,78 @@
-<x-guest-layout>
-    <x-auth-card>
-        <x-slot name="logo">
-            <a href="/">
-                <x-application-logo class="w-20 h-20 fill-current text-gray-500" />
-            </a>
-        </x-slot>
+@extends('layouts.auth')
 
-        <!-- Session Status -->
-        <x-auth-session-status class="mb-4" :status="session('status')" />
+@section('title')
+   Log in
+@stop
 
-        <form method="POST" action="{{ route('login') }}">
-            @csrf
+@section('css')
 
-            <!-- Email Address -->
-            <div>
-                <x-input-label for="email" :value="__('Email')" />
-                <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autofocus />
-                <x-input-error :messages="$errors->get('email')" class="mt-2" />
+@endsection
+
+
+@section('content_auth')
+<div class="login-box">
+    <div class="register-logo">
+      <a href="../../index2.html"><b>Admin</b>LTE</a>
+    </div>
+    <!-- /.login-logo -->
+    <div class="login-box-body">
+      <p class="login-box-msg">Sign in to start your session</p>
+
+      <form action="{{ route('login') }}" method="post" class="form-login">
+       @csrf
+        <div class="form-group has-feedback @error('email') has-error @enderror">
+          <input type="email" name="email" class="form-control" placeholder="Email" required value="{{ old('email') }}" autofocus>
+          <span class="glyphicon glyphicon-envelope form-control-feedback"></span>
+          @error('email')
+            <span class="help-block">{{ $message }}</span>
+          @else
+            <span class="help-block with-errors"></span>
+          @enderror
+        </div>
+        <div class="form-group has-feedback has-feedback @error('password') has-error @enderror">
+          <input type="password" name="password" class="form-control" placeholder="Password" required autocomplete="current-password">
+          <span class="glyphicon glyphicon-lock form-control-feedback"></span>
+          @error('password')
+            <span class="help-block">{{ $message }}</span>
+          @else
+            <span class="help-block with-errors"></span>
+          @enderror
+        </div>
+        <div class="row">
+          <div class="col-xs-8">
+            <div class="checkbox icheck">
+              <label>
+                <input type="checkbox" id="remember_me" name="remember"> Remember Me
+              </label>
             </div>
+          </div>
+          <!-- /.col -->
+          <div class="col-xs-4">
+            <button type="submit" class="btn btn-primary btn-block btn-flat">Sign In</button>
+          </div>
+          <!-- /.col -->
+        </div>
+      </form>
 
-            <!-- Password -->
-            <div class="mt-4">
-                <x-input-label for="password" :value="__('Password')" />
+      <div class="social-auth-links text-center">
+        <p>- OR -</p>
+        <a href="#" class="btn btn-block btn-social btn-facebook btn-flat"><i class="fa fa-facebook"></i> Sign in using
+          Facebook</a>
+        <a href="#" class="btn btn-block btn-social btn-google btn-flat"><i class="fa fa-google-plus"></i> Sign in using
+          Google+</a>
+      </div>
+      <!-- /.social-auth-links -->
 
-                <x-text-input id="password" class="block mt-1 w-full"
-                                type="password"
-                                name="password"
-                                required autocomplete="current-password" />
+      <a href="#">I forgot my password</a><br>
+      <a href="{{ route('register') }}" class="text-center">Register a new membership</a>
 
-                <x-input-error :messages="$errors->get('password')" class="mt-2" />
-            </div>
+    </div>
+    <!-- /.login-box-body -->
+</div>
+<!-- /.login-box -->
+@endsection
 
-            <!-- Remember Me -->
-            <div class="block mt-4">
-                <label for="remember_me" class="inline-flex items-center">
-                    <input id="remember_me" type="checkbox" class="rounded border-gray-300 text-indigo-600 shadow-sm focus:ring-indigo-500" name="remember">
-                    <span class="ml-2 text-sm text-gray-600">{{ __('Remember me') }}</span>
-                </label>
-            </div>
 
-            <div class="flex items-center justify-end mt-4">
-                @if (Route::has('password.request'))
-                    <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('password.request') }}">
-                        {{ __('Forgot your password?') }}
-                    </a>
-                @endif
+@section('scripts')
 
-                <x-primary-button class="ml-3">
-                    {{ __('Log in') }}
-                </x-primary-button>
-            </div>
-        </form>
-    </x-auth-card>
-</x-guest-layout>
+@endsection
