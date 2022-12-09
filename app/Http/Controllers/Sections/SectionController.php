@@ -1,8 +1,10 @@
 <?php
 
-namespace App\Http\Controllers;
+namespace App\Http\Controllers\Sections;
+use App\Http\Controllers\Controller;
 
 use App\Models\Section;
+use App\Models\Product;
 use Illuminate\Http\Request;
 
 class SectionController extends Controller
@@ -14,7 +16,8 @@ class SectionController extends Controller
      */
     public function index()
     {
-        //
+        $sections = Section::all();
+        return view('pages.sections.index', compact('sections'));
     }
 
     /**
@@ -35,7 +38,17 @@ class SectionController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        try {
+            $sections = new Section();
+            $sections->name = ['en' => $request->name_en, 'ar' => $request->name];
+            $sections->notes = $request->notes;
+            $sections->save();
+            return redirect()->route('sections.index');
+        }
+
+        catch (\Exception $e){
+            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -67,9 +80,19 @@ class SectionController extends Controller
      * @param  \App\Models\Section  $section
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, Section $section)
+    public function update(Request $request)
     {
-        //
+        try {
+            $sections = Section::findOrFail($request->id);
+            $sections->update([
+            $sections->name = ['ar' => $request->name, 'en' => $request->name_en],
+            $sections->notes = $request->notes,
+          ]);
+          return redirect()->route('sections.index');
+        }
+        catch(\Exception $e) {
+          return redirect()->back()->withErrors(['error' => $e->getMessage()]);
+        }
     }
 
     /**
@@ -78,8 +101,16 @@ class SectionController extends Controller
      * @param  \App\Models\Section  $section
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Section $section)
+    public function destroy(Request $request)
     {
-        //
+        $products = Product::where('section_id',$request->id)->pluck('section_id');
+
+        if($products->count() == 0){
+            $sections = Section::findOrFail($request->id)->delete();
+            return redirect()->route('sections.index');
+        }
+        else{
+            return redirect()->route('sections.index');
+        }
     }
 }
