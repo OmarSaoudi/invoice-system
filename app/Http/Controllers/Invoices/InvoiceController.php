@@ -11,7 +11,6 @@ use App\Models\InvoiceAttachments;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
-use League\Flysystem\Filesystem;
 
 
 class InvoiceController extends Controller
@@ -139,9 +138,8 @@ class InvoiceController extends Controller
      */
     public function update(Request $request)
     {
-        try {
-            $invoices = Invoice::findOrFail($request->invoice_id);
-            $invoices->update([
+        $invoices = Invoice::findOrFail($request->invoice_id);
+        $invoices->update([
             'invoice_number' => $request->invoice_number,
             'invoice_date' => $request->invoice_date,
             'due_date' => $request->due_date,
@@ -154,12 +152,18 @@ class InvoiceController extends Controller
             'rate_vat' => $request->rate_vat,
             'total' => $request->total,
             'note' => $request->note,
-            ]);
-          return redirect()->route('invoices.index');
-        }
-        catch (\Exception $e){
-            return redirect()->back()->withErrors(['error' => $e->getMessage()]);
-        }
+        ]);
+        $invoicedetails = InvoiceDetails::findOrFail($request->invoice_id);
+        $invoicedetails->update([
+            'invoice_number' => $request->invoice_number,
+            'product' => $request->product_id,
+            'section' => $request->section_id,
+            'status' => 'غير مدفوعة',
+            'value_status' => 2,
+            'note' => $request->note,
+            'created_by' => (Auth::user()->name),
+        ]);
+        return redirect()->route('invoices.index');
     }
 
     /**
@@ -177,6 +181,22 @@ class InvoiceController extends Controller
     {
         $list_products = Product::where("section_id", $id)->pluck("name", "id");
         return $list_products;
+    }
+
+    public function invoiceattachmentsadd(Request $request)
+    {
+            $image = $request->file('file_name');
+            $file_name = $image->getClientOriginalName();
+            $attachments =  new InvoiceAttachments();
+            $attachments->file_name = $file_name;
+            $attachments->invoice_number = $request->invoice_number;
+            $attachments->invoice_id = $request->invoice_id;
+            $attachments->created_by = Auth::user()->name;
+            $attachments->save();
+            // move photo
+            $imageName = $request->file_name->getClientOriginalName();
+            $request->file_name->move(public_path('Attachments/'. $request->invoice_number), $imageName);
+            return back();
     }
 
     public function open_file($invoice_number,$file_name)

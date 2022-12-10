@@ -75,7 +75,6 @@
                 <td>{{ $invoice->note }}</td>
                 <td>
                   <a href="{{ route('invoices.edit',$invoice->id) }}" class="btn btn-primary btn-sm" role="button" aria-pressed="true"><i class="fa fa-edit"></i></a>
-
                 </td>
               </tr>
               @endforeach

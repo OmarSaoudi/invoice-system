@@ -3,7 +3,6 @@
 use App\Http\Controllers\{
     Profile\ProfileController,
     Invoices\InvoiceController,
-    Invoices\InvoiceAttachmentsController,
     Sections\SectionController,
     Products\ProductController,
 };
@@ -32,7 +31,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('invoices', InvoiceController::class);
     Route::get('/section/{id}', [InvoiceController::class, 'getproducts']);
     Route::get('/InvoicesDetails/{id}', [InvoiceController::class, 'show']);
-    Route::resource('invoiceattachmentsadd', InvoiceAttachmentsController::class);
+    Route::post('invoiceattachmentsadd', [InvoiceController::class, 'invoiceattachmentsadd'])->name('invoiceattachmentsadd');
     Route::get('View_file/{invoice_number}/{file_name}', [InvoiceController::class, 'open_file']);
     Route::get('Download/{invoice_number}/{file_name}', [InvoiceController::class, 'download_file']);
     Route::post('delete_file', [InvoiceController::class, 'delete_file'])->name('delete_file');
