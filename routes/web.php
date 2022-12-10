@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\{
     Profile\ProfileController,
+    Invoices\InvoiceController,
     Sections\SectionController,
     Products\ProductController,
 };
@@ -27,6 +28,7 @@ Route::middleware('auth')->group(function () {
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
+    Route::resource('invoices', InvoiceController::class);
     Route::resource('sections', SectionController::class);
     Route::resource('products', ProductController::class);
     Route::post('delete_all_p', [ProductController::class, 'delete_all_p'])->name('delete_all_p');

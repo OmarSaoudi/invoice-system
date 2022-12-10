@@ -14,4 +14,14 @@ class Section extends Model
     protected $fillable=['name','notes'];
     protected $table = 'sections';
     public $timestamps = true;
+
+    public function product()
+    {
+        return $this->hasMany(Product::class);
+    }
+
+    public function invoice()
+    {
+        return $this->hasMany(Invoice::class);
+    }
 }

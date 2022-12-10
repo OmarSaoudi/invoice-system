@@ -20,4 +20,5 @@ class Product extends Model
     {
         return $this->belongsTo('App\Models\Section', 'section_id');
     }
+
 }
