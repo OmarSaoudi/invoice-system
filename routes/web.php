@@ -3,6 +3,7 @@
 use App\Http\Controllers\{
     Profile\ProfileController,
     Invoices\InvoiceController,
+    Invoices\InvoiceAttachmentsController,
     Sections\SectionController,
     Products\ProductController,
 };
@@ -29,6 +30,14 @@ Route::middleware('auth')->group(function () {
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('invoices', InvoiceController::class);
+    Route::get('/section/{id}', [InvoiceController::class, 'getproducts']);
+    Route::get('/InvoicesDetails/{id}', [InvoiceController::class, 'show']);
+    Route::resource('invoiceattachmentsadd', InvoiceAttachmentsController::class);
+    Route::get('View_file/{invoice_number}/{file_name}', [InvoiceController::class, 'open_file']);
+    Route::get('Download/{invoice_number}/{file_name}', [InvoiceController::class, 'download_file']);
+    Route::post('delete_file', [InvoiceController::class, 'delete_file'])->name('delete_file');
+    Route::get('/edit_invoice/{id}', [InvoiceController::class, 'edit']);
+    Route::get('Print_invoice/{id}', [InvoiceController::class, 'print_invoice']);
     Route::resource('sections', SectionController::class);
     Route::resource('products', ProductController::class);
     Route::post('delete_all_p', [ProductController::class, 'delete_all_p'])->name('delete_all_p');

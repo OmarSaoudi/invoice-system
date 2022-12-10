@@ -15,13 +15,8 @@ class Section extends Model
     protected $table = 'sections';
     public $timestamps = true;
 
-    public function product()
-    {
-        return $this->hasMany(Product::class);
-    }
-
     public function invoice()
     {
-        return $this->hasMany(Invoice::class);
+        return $this->hasMany('App\Models\Invoice', 'section_id');
     }
 }

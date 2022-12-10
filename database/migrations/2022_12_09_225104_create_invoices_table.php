@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('invoice_number', 50);
             $table->date('invoice_date')->nullable();
             $table->date('due_date')->nullable();
-            $table->string('product', 50);
+            $table->foreignId('product_id')->constrained('products')->cascadeOnDelete();
             $table->foreignId('section_id')->constrained('sections')->cascadeOnDelete();
             $table->decimal('amount_collection',8,2)->nullable();;
             $table->decimal('amount_commission',8,2);

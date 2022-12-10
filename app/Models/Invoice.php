@@ -13,7 +13,7 @@ class Invoice extends Model
         'invoice_number',
         'invoice_date',
         'due_date',
-        'product',
+        'product_id',
         'section_id',
         'amount_collection',
         'amount_commission',
@@ -26,11 +26,17 @@ class Invoice extends Model
         'note',
         'payment_date',
     ];
+    protected $table = 'invoices';
+    public $timestamps = true;
 
-    protected $dates = ['deleted_at'];
+
+    public function product()
+    {
+        return $this->belongsTo('App\Models\Product','product_id');
+    }
 
     public function section()
     {
-       return $this->belongsTo(Section::class);
+        return $this->belongsTo('App\Models\Section','section_id');
     }
 }

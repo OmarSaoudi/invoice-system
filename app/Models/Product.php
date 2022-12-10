@@ -15,7 +15,6 @@ class Product extends Model
     protected $table = 'products';
     public $timestamps = true;
 
-
     public function section()
     {
         return $this->belongsTo('App\Models\Section', 'section_id');
