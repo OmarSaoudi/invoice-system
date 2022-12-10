@@ -75,6 +75,7 @@
                 <td>{{ $invoice->note }}</td>
                 <td>
                   <a href="{{ route('invoices.edit',$invoice->id) }}" class="btn btn-primary btn-sm" role="button" aria-pressed="true"><i class="fa fa-edit"></i></a>
+                  <a class="btn btn-danger btn-sm" data-toggle="modal" data-id="{{ $invoice->id }}" data-invoice_number="{{ $invoice->invoice_number }}" data-target="#delete_invoice"><i class="fa fa-trash"></i></a>
                 </td>
               </tr>
               @endforeach
@@ -105,6 +106,37 @@
   <!-- /.content -->
 </div>
 
+<!-- Delete -->
+<div class="modal fade" id="delete_invoice">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+            <h4 class="modal-title">Delete Invoice</h4>
+      </div>
+      <div class="modal-body">
+        <form action="invoices/destroy" method="post">
+                      {{ method_field('delete') }}
+                      {{ csrf_field() }}
+                  <div class="modal-body">
+                      <p>Are sure of the deleting process ?</p><br>
+                      <input type="hidden" name="id" id="id" value="">
+                      <input class="form-control" name="invoice_number" id="invoice_number" type="text" readonly>
+                  </div>
+
+                  <div class="modal-footer">
+                       <button type="submit" class="btn btn-danger">Save changes</button>
+                       <button type="button" class="btn btn-default pull-left" data-dismiss="modal">Close</button>
+                  </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- End Delete -->
+
 @endsection
 
 
@@ -114,6 +146,16 @@
 <script>
   $(function () {
     $('#example1').DataTable()
+  })
+</script>
+<script>
+  $('#delete_invoice').on('show.bs.modal', function(event) {
+      var button = $(event.relatedTarget)
+      var id = button.data('id')
+      var invoice_number = button.data('invoice_number')
+      var modal = $(this)
+      modal.find('.modal-body #id').val(id);
+      modal.find('.modal-body #invoice_number').val(invoice_number);
   })
 </script>
 @endsection

@@ -172,10 +172,20 @@ class InvoiceController extends Controller
      * @param  \App\Models\Invoice  $invoice
      * @return \Illuminate\Http\Response
      */
-    public function destroy(Invoice $invoice)
+    public function destroy(Request $request)
     {
-        //
+        $id = $request->id;
+        $invoices = Invoice::where('id', $id)->first();
+        $attachments = InvoiceAttachments::where('invoice_id', $id)->first();
+
+        if (!empty($attachments->invoice_number)) {
+            Storage::disk('public_uploads')->deleteDirectory($attachments->invoice_number);
+        }
+        $invoices->forceDelete();
+        return redirect()->route('invoices.index');
+
     }
+
 
     public function getproducts($id)
     {
