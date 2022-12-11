@@ -9,6 +9,7 @@ use App\Models\Product;
 use App\Models\InvoiceDetails;
 use App\Models\InvoiceAttachments;
 use Illuminate\Http\Request;
+use Carbon\Carbon;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -59,10 +60,9 @@ class InvoiceController extends Controller
                 'value_vat' => $request->value_vat,
                 'rate_vat' => $request->rate_vat,
                 'total' => $request->total,
-                'status' => 'غير مدفوعة',
+                'status' => 'Unpaid',
                 'value_status' => 2,
                 'note' => $request->note,
-                'payment_date' => $request->payment_date,
             ]);
 
                 $id_invoice = Invoice::latest()->first()->id; // Give me The Last id for invoices saves
@@ -71,7 +71,7 @@ class InvoiceController extends Controller
                 'invoice_number' => $request->invoice_number,
                 'product' => $request->product_id,
                 'section' => $request->section_id,
-                'status' => 'غير مدفوعة',
+                'status' => 'Unpaid',
                 'value_status' => 2,
                 'note' => $request->note,
                 'created_by' => (Auth::user()->name),
@@ -158,7 +158,7 @@ class InvoiceController extends Controller
             'invoice_number' => $request->invoice_number,
             'product' => $request->product_id,
             'section' => $request->section_id,
-            'status' => 'غير مدفوعة',
+            'status' => 'Unpaid',
             'value_status' => 2,
             'note' => $request->note,
             'created_by' => (Auth::user()->name),
@@ -239,5 +239,55 @@ class InvoiceController extends Controller
     {
         $invoices = Invoice::where('id', $id)->first();
         return view('pages.invoices.print_invoice', compact('invoices'));
+    }
+
+    public function status_show($id)
+    {
+        $invoices = Invoice::where('id', $id)->first();
+        return view('pages.invoices.status_update', compact('invoices'));
+    }
+
+    public function status_update($id, Request $request)
+    {
+        $invoices = Invoice::findOrFail($id);
+        if ($request->status === 'Paid') {
+
+            $invoices->update([
+                'value_status' => 1,
+                'status' => $request->status,
+                'payment_date' => $request->payment_date,
+            ]);
+            InvoiceDetails::create([
+                'id_invoice' => $request->invoice_id,
+                'invoice_number' => $request->invoice_number,
+                'product' => $request->product_id,
+                'section' => $request->section_id,
+                'status' => $request->status,
+                'value_status' => 1,
+                'note' => $request->note,
+                'payment_date' => $request->payment_date,
+                'created_by' => (Auth::user()->name),
+            ]);
+        }
+
+        else {
+            $invoices->update([
+                'value_status' => 3,
+                'status' => $request->status,
+                'payment_date' => $request->payment_date,
+            ]);
+            InvoiceDetails::create([
+                'id_invoice' => $request->invoice_id,
+                'invoice_number' => $request->invoice_number,
+                'product' => $request->product_id,
+                'section' => $request->section_id,
+                'status' => $request->status,
+                'value_status' => 3,
+                'note' => $request->note,
+                'payment_date' => $request->payment_date,
+                'created_by' => (Auth::user()->name),
+            ]);
+        }
+        return redirect()->route('invoices.index');
     }
 }

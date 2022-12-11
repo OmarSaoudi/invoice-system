@@ -109,11 +109,11 @@
                           <td>{{ $invoices->section->name }}</td>
                           <td>{{ $invoices->product->name }}</td>
                           @if ($detail->value_status == 1)
-                              <td><span class="badge badge-pill badge-success">{{ $detail->status }}</span></td>
-                          @elseif($detail->value_status ==2)
-                              <td><span class="badge badge-pill badge-danger">{{ $detail->status }}</span></td>
+                              <td><span class="text-success">{{ $detail->status }}</span></td>
+                          @elseif($detail->value_status == 2)
+                              <td><span class="text-danger">{{ $detail->status }}</span></td>
                           @else
-                              <td><span class="badge badge-pill badge-warning">{{ $detail->status }}</span></td>
+                              <td><span class="text-warning">{{ $detail->status }}</span></td>
                           @endif
                           <td>{{ $detail->payment_date }}</td>
                           <td>{{ $detail->note }}</td>
