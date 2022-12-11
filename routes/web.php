@@ -37,7 +37,7 @@ Route::middleware('auth')->group(function () {
     Route::get('Download/{invoice_number}/{file_name}', [InvoiceController::class, 'download_file']);
     Route::post('delete_file', [InvoiceController::class, 'delete_file'])->name('delete_file');
     Route::get('/edit_invoice/{id}', [InvoiceController::class, 'edit']);
-    Route::get('Print_invoice/{id}', [InvoiceController::class, 'print_invoice']);
+    Route::get('print_invoice/{id}', [InvoiceController::class, 'print_invoice']);
     Route::resource('archives', ArchiveController::class);
     Route::get('/status_show/{id}', [InvoiceController::class, 'status_show'])->name('status_show');
     Route::post('/status_update/{id}', [InvoiceController::class, 'status_update'])->name('status_update');

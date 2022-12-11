@@ -77,6 +77,7 @@
                   <a class="btn btn-warning btn-sm" data-toggle="modal" data-id="{{ $invoice->id }}" data-invoice_number="{{ $invoice->invoice_number }}" data-target="#Transfer_invoice"><i class="fa fa-exchange"></i></a>
                   <a href="{{ route('invoices.edit',$invoice->id) }}" class="btn btn-primary btn-sm" role="button" aria-pressed="true"><i class="fa fa-edit"></i></a>
                   <a class="btn btn-danger btn-sm" data-toggle="modal" data-id="{{ $invoice->id }}" data-invoice_number="{{ $invoice->invoice_number }}" data-target="#delete_invoice"><i class="fa fa-trash"></i></a>
+                  <a class="btn btn-sm btn-info" href=" {{ url('print_invoice') }}/{{ $invoice->id }}"><i class="fa fa-print"></i></a>
                   <a href="{{ URL::route('status_show', [$invoice->id]) }}" class="btn btn-success btn-sm" role="button"><i class="fa fa-money"></i></a>
                 </td>
               </tr>
