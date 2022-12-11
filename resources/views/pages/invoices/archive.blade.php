@@ -1,7 +1,7 @@
 @extends('layouts.master')
 
 @section('title')
-    Invoices
+    Invoices | List of Archived Invoices
 @stop
 
 @section('css')
@@ -14,11 +14,12 @@
   <!-- Content Header (Page header) -->
   <section class="content-header">
     <h1>
-        Invoices
+        Archived invoices
     </h1>
     <ol class="breadcrumb">
       <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> Dashboard</a></li>
-      <li class="active">Invoices</li>
+      <li><a href="{{ route('invoices.index') }}"><i class="fa fa-file-text-o"></i> Invoices</a></li>
+      <li class="active">List of Archived Invoices</li>
     </ol>
   </section>
   <!-- Main content -->
@@ -27,9 +28,7 @@
       <div class="col-xs-12">
         <div class="box">
           <div class="box-header">
-             <h3 class="box-title">Invoices List <small>{{ $invoices->count() }}</small></h3>
-             <br><br>
-             <a href="invoices/create" class="btn btn-success"><i class="fa fa-plus"></i> Add</a>
+             <h3 class="box-title">List of Archived Invoices <small>{{ $invoices->count() }}</small></h3>
           </div>
           <div class="box-body">
             <table id="example1" class="table table-bordered table-striped">
@@ -57,7 +56,7 @@
                 <td>{{ $invoice->invoice_number }}</td>
                 <td>{{ $invoice->invoice_date }}</td>
                 <td>{{ $invoice->due_date }}</td>
-                <td><a href="{{ url('InvoicesDetails') }}/{{ $invoice->id }}">{{ $invoice->section->name }}</a></td>
+                <td>{{ $invoice->section->name }}</a></td>
                 <td>{{ $invoice->product->name }}</td>
                 <td>{{ $invoice->discount }}</td>
                 <td>{{ $invoice->rate_vat }}</td>
@@ -75,7 +74,6 @@
                 <td>{{ $invoice->note }}</td>
                 <td>
                   <a class="btn btn-warning btn-sm" data-toggle="modal" data-id="{{ $invoice->id }}" data-invoice_number="{{ $invoice->invoice_number }}" data-target="#Transfer_invoice"><i class="fa fa-exchange"></i></a>
-                  <a href="{{ route('invoices.edit',$invoice->id) }}" class="btn btn-primary btn-sm" role="button" aria-pressed="true"><i class="fa fa-edit"></i></a>
                   <a class="btn btn-danger btn-sm" data-toggle="modal" data-id="{{ $invoice->id }}" data-invoice_number="{{ $invoice->invoice_number }}" data-target="#delete_invoice"><i class="fa fa-trash"></i></a>
                 </td>
               </tr>
@@ -118,7 +116,7 @@
             <h4 class="modal-title">Delete Invoice</h4>
       </div>
       <div class="modal-body">
-        <form action="invoices/destroy" method="post">
+        <form action="{{ route('archives.destroy', 'test') }}" method="post">
                       {{ method_field('delete') }}
                       {{ csrf_field() }}
                   <div class="modal-body">
@@ -146,16 +144,15 @@
         <button type="button" class="close" data-dismiss="modal" aria-label="Close">
           <span aria-hidden="true">&times;</span>
         </button>
-            <h4 class="modal-title">Archive Invoice</h4>
+            <h4 class="modal-title">Unarchiving Invoice</h4>
       </div>
       <div class="modal-body">
-        <form action="{{ route('invoices.destroy', 'test') }}" method="post">
-              {{ method_field('delete') }}
-              {{ csrf_field() }}
+        <form action="{{ route('archives.update', 'test') }}" method="post">
+                {{ method_field('patch') }}
+                {{ csrf_field() }}
                   <div class="modal-body">
-                      <p>Are you sure about the archiving process ?</p><br>
+                      <p>Are you sure to cancel the archive ?</p><br>
                       <input type="hidden" name="id" id="id" value="">
-                      <input type="hidden" name="id_page" id="id_page" value="2">
                       <input class="form-control" name="invoice_number" id="invoice_number" type="text" readonly>
                   </div>
 

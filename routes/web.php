@@ -3,6 +3,7 @@
 use App\Http\Controllers\{
     Profile\ProfileController,
     Invoices\InvoiceController,
+    Invoices\ArchiveController,
     Sections\SectionController,
     Products\ProductController,
 };
@@ -37,6 +38,10 @@ Route::middleware('auth')->group(function () {
     Route::post('delete_file', [InvoiceController::class, 'delete_file'])->name('delete_file');
     Route::get('/edit_invoice/{id}', [InvoiceController::class, 'edit']);
     Route::get('Print_invoice/{id}', [InvoiceController::class, 'print_invoice']);
+    Route::resource('archives', ArchiveController::class);
+
+
+
     Route::resource('sections', SectionController::class);
     Route::resource('products', ProductController::class);
     Route::post('delete_all_p', [ProductController::class, 'delete_all_p'])->name('delete_all_p');

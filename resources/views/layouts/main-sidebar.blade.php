@@ -27,7 +27,19 @@
       <li class="header">MAIN NAVIGATION</li>
       <li><a href="{{ route('dashboard') }}"><i class="fa fa-dashboard"></i> <span>Dashboard</span></a></li>
       <li class="header">MASTER</li>
-      <li><a href="{{ route('invoices.index') }}"><i class="fa fa-file-text-o"></i> <span>Invoices</span></a></li>
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-cog"></i>
+          <span>Invoices</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="{{ route('invoices.index') }}"><i class="fa fa-file-text-o"></i> <span>Invoices</span></a></li>
+          <li><a href="{{ route('archives.index') }}"><i class="fa fa-exchange"></i> Archived Invoices</a></li>
+        </ul>
+      </li>
       <li><a href="{{ route('sections.index') }}"><i class="fa fa-usd"></i> <span>Sections</span></a></li>
       <li><a href="{{ route('products.index') }}"><i class="fa fa-product-hunt"></i> <span>Products</span></a></li>
     </ul>
