@@ -296,4 +296,22 @@ class InvoiceController extends Controller
     {
         return Excel::download(new InvoicesExport, 'invoices.xlsx');
     }
+
+    public function invoice_paid()
+    {
+        $invoices = Invoice::where('value_status', 1)->get();
+        return view('pages.invoices.invoices_paid', compact('invoices'));
+    }
+
+    public function invoice_unpaid()
+    {
+        $invoices = Invoice::where('value_status',2)->get();
+        return view('pages.invoices.invoices_unpaid', compact('invoices'));
+    }
+
+    public function invoice_partially()
+    {
+        $invoices = Invoice::where('value_status',3)->get();
+        return view('pages.invoices.invoices_partially', compact('invoices'));
+    }
 }

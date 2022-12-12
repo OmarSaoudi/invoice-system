@@ -4,6 +4,7 @@ use App\Http\Controllers\{
     Profile\ProfileController,
     Invoices\InvoiceController,
     Invoices\ArchiveController,
+    Invoices\ReportController,
     Sections\SectionController,
     Products\ProductController,
 };
@@ -42,6 +43,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/status_show/{id}', [InvoiceController::class, 'status_show'])->name('status_show');
     Route::post('/status_update/{id}', [InvoiceController::class, 'status_update'])->name('status_update');
     Route::get('export_invoices', [InvoiceController::class, 'export']);
+    Route::get('invoice_paid', [InvoiceController::class, 'invoice_paid']);
+    Route::get('invoice_unpaid', [InvoiceController::class, 'invoice_unpaid']);
+    Route::get('invoice_partially', [InvoiceController::class, 'invoice_partially']);
+    Route::get('invoices_report', [ReportController::class, 'index']);
+    Route::post('search_invoices', [ReportController::class, 'search_invoices']);
 
 
 

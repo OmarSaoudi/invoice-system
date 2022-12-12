@@ -37,7 +37,22 @@
         </a>
         <ul class="treeview-menu">
           <li><a href="{{ route('invoices.index') }}"><i class="fa fa-file-text-o"></i> <span>Invoices</span></a></li>
+          <li><a href="{{ url('/' . ($page = 'invoice_paid')) }}"><i class="fa fa-file-text-o"></i> <span>Invoices Paid</span></a></li>
+          <li><a href="{{ url('/' . ($page = 'invoice_unpaid')) }}"><i class="fa fa-file-text-o"></i> <span>Invoices Unpaid</span></a></li>
+          <li><a href="{{ url('/' . ($page = 'invoice_partially')) }}"><i class="fa fa-file-text-o"></i> <span>Invoices Partially</span></a></li>
           <li><a href="{{ route('archives.index') }}"><i class="fa fa-exchange"></i> Archived Invoices</a></li>
+        </ul>
+      </li>
+      <li class="treeview">
+        <a href="#">
+          <i class="fa fa-bar-chart"></i>
+          <span>Reports</span>
+          <span class="pull-right-container">
+            <i class="fa fa-angle-left pull-right"></i>
+          </span>
+        </a>
+        <ul class="treeview-menu">
+          <li><a href="{{ url('/' . ($page = 'invoices_report')) }}"><i class="fa fa-line-chart"></i> <span>Invoices Reports</span></a></li>
         </ul>
       </li>
       <li><a href="{{ route('sections.index') }}"><i class="fa fa-usd"></i> <span>Sections</span></a></li>
