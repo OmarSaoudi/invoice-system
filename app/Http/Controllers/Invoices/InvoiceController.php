@@ -9,7 +9,8 @@ use App\Models\Product;
 use App\Models\InvoiceDetails;
 use App\Models\InvoiceAttachments;
 use Illuminate\Http\Request;
-use Carbon\Carbon;
+use App\Exports\InvoicesExport;
+use Maatwebsite\Excel\Facades\Excel;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Storage;
 
@@ -289,5 +290,10 @@ class InvoiceController extends Controller
             ]);
         }
         return redirect()->route('invoices.index');
+    }
+
+    public function export()
+    {
+        return Excel::download(new InvoicesExport, 'invoices.xlsx');
     }
 }

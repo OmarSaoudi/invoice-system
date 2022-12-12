@@ -30,6 +30,7 @@
              <h3 class="box-title">Invoices List <small>{{ $invoices->count() }}</small></h3>
              <br><br>
              <a href="invoices/create" class="btn btn-success"><i class="fa fa-plus"></i> Add</a>
+             <a href="{{ url('export_invoices') }}" class="btn btn-primary"><i class="fa fa-file-excel-o"></i> Excel Export</a>
           </div>
           <div class="box-body">
             <table id="example1" class="table table-bordered table-striped">

@@ -41,6 +41,7 @@ Route::middleware('auth')->group(function () {
     Route::resource('archives', ArchiveController::class);
     Route::get('/status_show/{id}', [InvoiceController::class, 'status_show'])->name('status_show');
     Route::post('/status_update/{id}', [InvoiceController::class, 'status_update'])->name('status_update');
+    Route::get('export_invoices', [InvoiceController::class, 'export']);
 
 
 
