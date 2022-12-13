@@ -7,10 +7,6 @@ use App\Http\Controllers\{
     Invoices\ReportController,
     Sections\SectionController,
     Products\ProductController,
-
-    Clients\ClientController,
-    Days\DayController,
-
 };
 
 use Illuminate\Support\Facades\Route;
@@ -53,9 +49,6 @@ Route::middleware('auth')->group(function () {
     Route::get('invoices_report', [ReportController::class, 'index']);
     Route::post('search_invoices', [ReportController::class, 'search_invoices']);
 
-
-    // start clients
-    Route::resource('clients', ClientController::class);
 
 
     Route::resource('sections', SectionController::class);
