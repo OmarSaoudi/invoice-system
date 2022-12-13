@@ -192,30 +192,19 @@
 </script>
 <script>
     function myFunction() {
-
         var amount_commission = parseFloat(document.getElementById("amount_commission").value);
         var discount = parseFloat(document.getElementById("discount").value);
         var rate_vat = parseFloat(document.getElementById("rate_vat").value);
         var value_vat = parseFloat(document.getElementById("value_vat").value);
-
         var amount_commission2 = amount_commission - discount;
-
-
         if (typeof amount_commission === 'undefined' || !amount_commission) {
-
             alert('يرجي ادخال مبلغ العمولة');
-
         } else {
             var intResults = amount_commission2 * rate_vat / 100;
-
             var intResults2 = parseFloat(intResults + amount_commission2);
-
             sumq = parseFloat(intResults).toFixed(2);
-
             sumt = parseFloat(intResults2).toFixed(2);
-
             document.getElementById("value_vat").value = sumq;
-
             document.getElementById("total").value = sumt;
         }
     }

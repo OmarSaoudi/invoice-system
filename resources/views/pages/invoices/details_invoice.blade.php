@@ -253,7 +253,6 @@
       var file_name = button.data('file_name')
       var invoice_number = button.data('invoice_number')
       var modal = $(this)
-
       modal.find('.modal-body #id').val(id);
       modal.find('.modal-body #file_name').val(file_name);
       modal.find('.modal-body #invoice_number').val(invoice_number);

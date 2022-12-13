@@ -257,7 +257,6 @@
            $("#datatable input[type=checkbox]:checked").each(function() {
                selected.push(this.value);
            });
-
            if (selected.length > 0) {
                $('#delete_all_p').modal('show')
                $('input[id="delete_all_id"]').val(selected);
