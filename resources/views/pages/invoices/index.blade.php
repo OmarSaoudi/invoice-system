@@ -75,11 +75,20 @@
                 </td>
                 <td>{{ $invoice->note }}</td>
                 <td>
-                  <a class="btn btn-warning btn-sm" data-toggle="modal" data-id="{{ $invoice->id }}" data-invoice_number="{{ $invoice->invoice_number }}" data-target="#Transfer_invoice"><i class="fa fa-exchange"></i></a>
-                  <a href="{{ route('invoices.edit',$invoice->id) }}" class="btn btn-primary btn-sm" role="button" aria-pressed="true"><i class="fa fa-edit"></i></a>
-                  <a class="btn btn-danger btn-sm" data-toggle="modal" data-id="{{ $invoice->id }}" data-invoice_number="{{ $invoice->invoice_number }}" data-target="#delete_invoice"><i class="fa fa-trash"></i></a>
-                  <a class="btn btn-sm btn-info" href=" {{ url('print_invoice') }}/{{ $invoice->id }}"><i class="fa fa-print"></i></a>
-                  <a href="{{ URL::route('status_show', [$invoice->id]) }}" class="btn btn-success btn-sm" role="button"><i class="fa fa-money"></i></a>
+                    <div class="btn-group">
+                        <button type="button" class="btn btn-success btn-flat">Operation</button>
+                        <button type="button" class="btn btn-success btn-flat dropdown-toggle" data-toggle="dropdown">
+                          <span class="caret"></span>
+                          <span class="sr-only">Toggle Dropdown</span>
+                        </button>
+                        <ul class="dropdown-menu" role="menu">
+                          <li><a data-toggle="modal" data-id="{{ $invoice->id }}" data-invoice_number="{{ $invoice->invoice_number }}" data-target="#Transfer_invoice"><i style="color:orange" class="fa fa-exchange"></i> Archive Invoice</a></li>
+                          <li><a data-toggle="modal" data-id="{{ $invoice->id }}" data-invoice_number="{{ $invoice->invoice_number }}" data-target="#delete_invoice"><i style="color:red" class="fa fa-trash"></i> Delete Invoice</a></li>
+                          <li><a href="{{ route('invoices.edit',$invoice->id) }}"><i style="color:blue" class="fa fa-edit"></i> Edit Invoice</a></li>
+                          <li><a href="{{ url('print_invoice') }}/{{ $invoice->id }}"><i style="color:green" class="fa fa-print"></i> Print Invoice</a></li>
+                          <li><a href="{{ URL::route('status_show', [$invoice->id]) }}"><i style="color:rgb(128, 77, 0)" class="fa fa-money"></i> Change of payment status</a></li>
+                        </ul>
+                    </div>
                 </td>
               </tr>
               @endforeach
