@@ -7,6 +7,7 @@ use App\Http\Controllers\{
     Invoices\ReportController,
     Sections\SectionController,
     Products\ProductController,
+    ProfilePersonlyController,
 };
 
 use Illuminate\Support\Facades\Route;
@@ -29,7 +30,6 @@ Route::middleware('auth')->group(function () {
     Route::get('/dashboard', function () {return view('dashboard');})->middleware(['auth', 'verified'])->name('dashboard');
     Route::get('/profile', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::patch('/profile', [ProfileController::class, 'update'])->name('profile.update');
-    Route::delete('/profile', [ProfileController::class, 'destroy'])->name('profile.destroy');
     Route::resource('invoices', InvoiceController::class);
     Route::get('/section/{id}', [InvoiceController::class, 'getproducts']);
     Route::get('/InvoicesDetails/{id}', [InvoiceController::class, 'show']);
@@ -55,6 +55,9 @@ Route::middleware('auth')->group(function () {
     Route::resource('products', ProductController::class);
     Route::post('delete_all_p', [ProductController::class, 'delete_all_p'])->name('delete_all_p');
     Route::post('Filter_Products_Section', [ProductController::class, 'Filter_Products_Section'])->name('Filter_Products_Section');
+
+    Route::resource('profile_personlies', ProfilePersonlyController::class);
+
 });
 
 require __DIR__.'/auth.php';
